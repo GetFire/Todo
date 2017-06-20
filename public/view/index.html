@@ -1,0 +1,127 @@
+<!-- index.html -->
+<!doctype html>
+
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="scotchTodo">
+<head>
+    <!-- META -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Optimize mobile viewport -->
+
+    <title>Node/Angular Todo App</title>
+
+    <!-- SCROLLS -->
+    <link rel="shortcut icon" href="../assets/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+    <!-- load bootstrap -->
+    <style>
+        html {
+            overflow-y: scroll;
+        }
+
+        body {
+            padding-top: 50px;
+        }
+
+        #todo-list {
+            margin-bottom: 30px;
+        }
+    </style>
+
+    <!-- SPELLS -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><!-- load jquery -->
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script><!-- load angular -->
+    <script src="core.js"></script>
+
+</head>
+<!-- SET THE CONTROLLER AND GET ALL TODOS -->
+<body ng-controller="mainController">
+<div class="container">
+
+    <!-- HEADER AND TODO COUNT -->
+    <div class="jumbotron text-center"
+         style="background:url(https://dojyr1ui81hbr.cloudfront.net/wp-content/uploads/2014/08/footer-background.png) no-repeat center top">
+        <h1>I'm a Todo-aholic <span class="label label-info">{{ todos.length }}</span></h1>
+        <h2 ng-show="!isAuth">Sign Up to start</h2>
+        <h2 ng-show="isAuth">
+            <button class="btn btn-warning btn-lg" ng-click="logout()">Logout</button>
+        </h2>
+    </div>
+    <div class="container" ng-show="isAuth">
+        <div class="col-sm-8 col-sm-offset-2 text-center">
+            <h1>Welcome back,<strong>{{currentUser.username}}!</strong>
+            </h1>
+        </div>
+
+    </div>
+
+    <!-- FORM TO CREATE TODOS -->
+    <div id="todo-form" class="row" ng-show="isAuth">
+        <div class="col-sm-8 col-sm-offset-2 text-center">
+            <form>
+                <div class="form-group">
+                    <input type="text" class="form-control input-lg text-center"
+                           placeholder="I want to buy a puppy that will love me forever" ng-model="todo.text">
+                </div>
+
+                <div class="btn-group">
+                    <button type="submit" class="btn btn-primary btn-lg" ng-click="createTodo()">Add Todo</button>
+                    <button class="btn btn-success btn-lg" ng-click="getMy()">Get my Todos</button>
+                    <button class="btn btn-info btn-lg" ng-click="getAllTodos()">Get all Todos</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- TODO LIST -->
+    <div id="todo-list" class="row" ng-show="isAuth">
+        <div class="col-sm-4 col-sm-offset-4">
+
+            <!-- LOOP OVER THE TODOS IN $scope.todos -->
+            <div class="checkbox" ng-repeat="todo in todos">
+                <label>
+                    <span>{{ todo.text }} </span>
+                    <button class="btn btn-danger btn-xs" ng-click="deleteTodo(todo._id)"
+                            ng-show="todo.belongsTo==currentUser._id">Delete
+                    </button>
+                </label>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="container" ng-show="!isAuth">
+        <h1 class="text-center">Sign UP</h1>
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-3">
+                <form>
+                    <div class="alert alert-danger col-xs-8 col-xs-offset-3" ng-show="error">{{error}}</div>
+                    <div class="form-group col-xs-8 col-xs-offset-2">
+                        <label>Username:</label>
+                        <div>
+                            <input type="text" class="form-control" ng-model="user.username" placeholder="username"
+                                   required="required">
+                        </div>
+                    </div>
+                    <div class="form-group form-group col-xs-8 col-xs-offset-3">
+                        <label>Password:</label>
+                        <div>
+                            <input type="password" class="form-control" ng-model="user.password" placeholder="password"
+                                   required="required">
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-8 col-xs-offset-3">
+                        <div class="btn-group">
+                            <button type="submit" class="btn btn-primary btn-lg" ng-click="login()">Sign Up</button>
+                            <button class="btn btn-success btn-lg" ng-click="register()">Create an account</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

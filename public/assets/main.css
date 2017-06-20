@@ -1,0 +1,13 @@
+.header-wrap {
+    background: url(footer-background.png) no-repeat center top;
+    margin-top: 50px;
+    text-align: center;
+    background-attachment: relative;
+    min-height: 500px;
+    width: 100%;
+}
+
+h2:hover {
+    text-decoration: underline;
+    text-decoration-color: #f3f9f0;
+}

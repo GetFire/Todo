@@ -1,0 +1,15 @@
+{
+  "name": "node-todo",
+  "version": "1.0.0",
+  "description": "Simple todo application",
+  "main": "server.js",
+  "author": "Scotch",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "jsonwebtoken": "^7.4.1",
+    "method-override": "^2.3.9",
+    "mongoose": "^4.10.7",
+    "morgan": "^1.8.2"
+  }
+}
