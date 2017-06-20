@@ -15,12 +15,12 @@ To run this app:
 
 ## Used technologies
 
- ![](https://www.shareicon.net/data/128x128/2015/10/06/112725_development_512x512.png)
- ![](https://greycedinnovations.com/static/greycedinnovations/img/technology/mongodb.png)
- ![](https://www.shareicon.net/data/128x128/2016/07/08/116973_development_512x512.png)
- ![](http://nashvillesoftwareschool.com/images/technologies/express.png)
- ![](https://jwt.io/img/pic_logo.svg)
- ![](http://vojtechruzicka.com/wp-content/uploads/2016/05/icon_IntelliJIDEA1.png)
+ ![NodeJS](https://www.shareicon.net/data/128x128/2015/10/06/112725_development_512x512.png)
+ ![MongoDB](https://greycedinnovations.com/static/greycedinnovations/img/technology/mongodb.png)
+ ![AngularJS](https://www.shareicon.net/data/128x128/2016/07/08/116973_development_512x512.png)
+ ![Express](http://nashvillesoftwareschool.com/images/technologies/express.png)
+ ![JWT](https://jwt.io/img/pic_logo.svg)
+ ![Intellij IDEA](http://vojtechruzicka.com/wp-content/uploads/2016/05/icon_IntelliJIDEA1.png)
 
 ## Useful articles
 
