@@ -16,7 +16,6 @@ To run this app:
 ## Used technologies
 
 * **NodeJS** ![](https://cdn2.iconfinder.com/data/icons/nodejs-1/128/nodejs-128.png)
-<img srs="https://cdn2.iconfinder.com/data/icons/nodejs-1/128/nodejs-128.png">
 * **MongoDB**
 * **AngularJS**
 * **Express**
