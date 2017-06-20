@@ -69,7 +69,7 @@ app.post('/api/user', function (req, res) {
     });
 });
 
-
+//sign up
 apiRouter.get('/login', function (req, res) {
     User.findOne({
         name: req.headers.username
@@ -183,7 +183,6 @@ apiRouter.delete('/todo/:todo_id', function (req, res) {
         if (err) {
             res.send(err);
         }
-        console.log(todo.belongsTo + '/' + decoded._doc._id);
         if (todo.belongsTo == decoded._doc._id) {
             Todo.remove({
                 _id: req.params.todo_id
