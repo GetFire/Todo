@@ -15,10 +15,11 @@ To run this app:
 
 ## Used technologies
 
-* **NodeJS** ![](https://cdn2.iconfinder.com/data/icons/nodejs-1/128/nodejs-128.png)
-* **MongoDB**
-* **AngularJS**
-* **Express**
+ ![](https://www.shareicon.net/data/128x128/2015/10/06/112725_development_512x512.png)
+ ![](https://greycedinnovations.com/static/greycedinnovations/img/technology/mongodb.png)
+ ![](https://www.shareicon.net/data/128x128/2016/07/08/116973_development_512x512.png)
+ ![](http://nashvillesoftwareschool.com/images/technologies/express.png)
+ ![](https://jwt.io/img/pic_logo.svg)
 * **Mongoose**
 * **JWT**
 * **Morgan**
