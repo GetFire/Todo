@@ -20,10 +20,7 @@ To run this app:
  ![](https://www.shareicon.net/data/128x128/2016/07/08/116973_development_512x512.png)
  ![](http://nashvillesoftwareschool.com/images/technologies/express.png)
  ![](https://jwt.io/img/pic_logo.svg)
-* **Mongoose**
-* **JWT**
-* **Morgan**
-* **Intelij IDEA**
+ ![](http://vojtechruzicka.com/wp-content/uploads/2016/05/icon_IntelliJIDEA1.png)
 
 ## Useful articles
 
