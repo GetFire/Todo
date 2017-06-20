@@ -1,4 +1,4 @@
-#Simple TODOs App ![icon](./public/assets/favicon.png)
+#Simple TODOs App
 
 ##About "TODO-aholic"
 
