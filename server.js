@@ -53,7 +53,7 @@ app.post('/api/user', function (req, res) {
                         }
                         console.log("User is " + user);
                         var token = jwt.sign(user, app.get('superSecret'), {
-                            // exp: 30 // expires in 24 hours
+                            expiresIn: 18000 // expires in 24 hours
                         });
 
                         res.json({
@@ -90,7 +90,7 @@ apiRouter.get('/login', function (req, res) {
                 });
             } else {
                 token = jwt.sign(user, app.get('superSecret'), {
-                    // exp: 30 // expires in 24 hours
+                    expiresIn: 18000 // expires in 24 hours
                 });
 
                 res.json({
@@ -142,9 +142,10 @@ apiRouter.get('/todo', function (req, res) {
 });
 
 apiRouter.post('/todo', function (req, res) {
+    var token = req.body.token || req.query.token || req.headers['x-access-token'];
     var decoded;
     try {
-        decoded = jwt.verify(req.body.token, app.get('superSecret'));
+        decoded = jwt.verify(token, app.get('superSecret'));
     } catch (ex) {
         return res.status(401).send({message: 'Unauthorized'});
     }
@@ -169,56 +170,53 @@ apiRouter.post('/todo', function (req, res) {
 });
 
 apiRouter.delete('/todo/:todo_id', function (req, res) {
+    var token = req.body.token || req.query.token || req.headers['x-access-token'];
     var decoded;
     try {
-        decoded = jwt.verify(req.body.token, app.get('superSecret'));
+        decoded = jwt.verify(token, app.get('superSecret'));
     } catch (ex) {
         return res.status(401).send({message: 'Unauthorized'});
     }
     Todo.findOne({
         _id: req.params.todo_id
     }, function (err, todo) {
-        if (err)
+        if (err) {
             res.send(err);
+        }
+        console.log(todo.belongsTo + '/' + decoded._doc._id);
         if (todo.belongsTo == decoded._doc._id) {
             Todo.remove({
-                _id: todo.id
-            })
+                _id: req.params.todo_id
+            }, function (err, todo) {
+                if (err)
+                    res.send(err);
+
+                Todo.find({
+                    belongsTo: decoded._doc._id
+                }, function (err, todos) {
+                    if (err) {
+                        res.send(err);
+                    }
+                    res.json(todos);
+                });
+            });
         } else {
+            console.log('belongsTo & decoded._doc._id doesn`t match'.toUpperCase());
             return res.status(401).send({message: 'Unauthorized'});
         }
-
-        Todo.find({
-            belongsTo: decoded._doc._id
-        }, function (err, todos) {
-            if (err) {
-                res.send(err);
-            }
-            res.json(todos);
-        });
-    });
-    //============================================================
-    Todo.remove({
-        _id: req.params.todo_id
-    }, function (err, todo) {
-        if (err)
-            res.send(err);
-
-        Todo.find({
-            belongsTo: decoded._doc._id
-        }, function (err, todos) {
-            if (err) {
-                res.send(err);
-            }
-            res.json(todos);
-        });
     });
 });
 
-apiRouter.get('/todo/:owner_id', function (req, res) {
-    console.log("Owner ID is " + req.params.owner_id);
+apiRouter.get('/todo/my', function (req, res) {
+    var token = req.body.token || req.query.token || req.headers['x-access-token'];
+    var decoded;
+    try {
+        decoded = jwt.verify(token, app.get('superSecret'));
+    } catch (ex) {
+        return res.status(401).send({message: 'Unauthorized'});
+    }
     Todo.find({
-        belongsTo: req.params.owner_id
+        belongsTo: decoded._doc._id
     }, function (err, todo) {
         if (err) {
             res.send(err);

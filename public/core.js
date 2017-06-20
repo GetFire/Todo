@@ -8,17 +8,10 @@ function mainController($scope, $http) {
     $scope.login = function () {
         $http.get('/api/login', {headers: {'username': $scope.user.username, 'password': $scope.user.password}})
             .success(function (data) {
-                console.log(data);
                 $scope.currentUser = data;
                 $scope.isAuth = true;
                 $scope.user = {};
                 $scope.error = false;
-
-
-                $http.get('/api', {headers: {'x-access-token': $scope.currentUser.token}})
-                    .success(function (data) {
-                        console.log(data);
-                    })
 
             })
             .error(function (data) {
@@ -42,7 +35,6 @@ function mainController($scope, $http) {
                 $scope.isAuth = true;
                 $scope.currentUser = data;
                 $scope.user = {};
-                console.log(data);
                 $scope.error = false;
             }).error(function (data) {
             $scope.error = data.message;
@@ -58,7 +50,6 @@ function mainController($scope, $http) {
             .success(function (data) {
                 $scope.todo = {}; // clear the form so our user is ready to enter another
                 $scope.todos = data;
-                console.log(data);
             })
             .error(function (data) {
                 console.log('Error: ' + data.message);
@@ -82,8 +73,6 @@ function mainController($scope, $http) {
         $http.get('/api/todo', {headers: {'x-access-token': $scope.currentUser.token}})
             .success(function (data) {
                 $scope.todos = data;
-                console.log(data);
-
             })
             .error(function (data) {
                 console.log('Error: ' + data.message);
@@ -91,11 +80,8 @@ function mainController($scope, $http) {
     };
 
     $scope.getMy = function () {
-        $http.get('/api/todo/' + $scope.currentUser._id, {
-            headers: {
-                'x-access-token': $scope.currentUser.token,
-                '_id': $scope.currentUser._id
-            }
+        $http.get('/api/todo/my', {
+            headers: {'x-access-token': $scope.currentUser.token}
         })
             .success(function (data) {
                 $scope.todos = data;
