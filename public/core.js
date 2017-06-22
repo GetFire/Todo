@@ -1,5 +1,5 @@
 // public/core.js
-angular.module('scotchTodo', []);
+angular.module('GetFire', []);
 
 function mainController($scope, $http) {
     $scope.todo = {};
