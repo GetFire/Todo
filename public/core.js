@@ -58,6 +58,7 @@ function mainController($scope, $http) {
     };
 
     // delete a todo after checking it
+
     $scope.deleteTodo = function (id) {
         $http.delete('/api/todo/' + id, {headers: {'x-access-token': $scope.currentUser.token}})
             .success(function (data) {
