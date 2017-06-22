@@ -62,6 +62,7 @@
                 <div class="form-group">
                     <input type="text" class="form-control input-lg text-center"
                            placeholder="I want to buy a puppy that will love me forever" ng-model="todo.text">
+                    <span ng-show="error">{{error}}</span>
                 </div>
 
                 <div class="btn-group">
@@ -80,10 +81,10 @@
             <!-- LOOP OVER THE TODOS IN $scope.todos -->
             <div class="checkbox" ng-repeat="todo in todos">
                 <label>
-                    <span>{{ todo.text }} </span>
-                    <button class="btn btn-danger btn-xs" ng-click="deleteTodo(todo._id)"
-                            ng-show="todo.belongsTo==currentUser._id">Delete
+                    <button class="btn btn-success btn-xs" ng-click="deleteTodo(todo._id)"
+                            ng-show="todo.belongsTo==currentUser._id">Done
                     </button>
+                    <span>{{ todo.text }} </span>
                 </label>
             </div>
 
