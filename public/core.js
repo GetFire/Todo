@@ -1,5 +1,5 @@
 // public/core.js
-angular.module('scotchTodo', []);
+angular.module('GetFire', []);
 
 function mainController($scope, $http) {
     $scope.todo = {};
@@ -48,15 +48,17 @@ function mainController($scope, $http) {
         $scope.todo.token = $scope.currentUser.token;
         $http.post('/api/todo', $scope.todo)
             .success(function (data) {
+                $scope.error=false;
                 $scope.todo = {}; // clear the form so our user is ready to enter another
                 $scope.todos = data;
             })
             .error(function (data) {
-                console.log('Error: ' + data.message);
+                $scope.error = data.message;
             });
     };
 
     // delete a todo after checking it
+
     $scope.deleteTodo = function (id) {
         $http.delete('/api/todo/' + id, {headers: {'x-access-token': $scope.currentUser.token}})
             .success(function (data) {

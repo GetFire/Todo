@@ -142,30 +142,34 @@ apiRouter.get('/todo', function (req, res) {
 });
 
 apiRouter.post('/todo', function (req, res) {
-    var token = req.body.token || req.query.token || req.headers['x-access-token'];
-    var decoded;
-    try {
-        decoded = jwt.verify(token, app.get('superSecret'));
-    } catch (ex) {
-        return res.status(401).send({message: 'Unauthorized'});
-    }
+    if (req.body.text) {
+        var token = req.body.token || req.query.token || req.headers['x-access-token'];
+        var decoded;
+        try {
+            decoded = jwt.verify(token, app.get('superSecret'));
+        } catch (ex) {
+            return res.status(401).send({message: 'Unauthorized'});
+        }
 
-    Todo.create({
-        text: req.body.text,
-        belongsTo: decoded._doc._id
-    }, function (err, todo) {
-        if (err)
-            res.send(err);
-
-        Todo.find({
+        Todo.create({
+            text: req.body.text,
             belongsTo: decoded._doc._id
-        }, function (err, todos) {
-            if (err) {
+        }, function (err, todo) {
+            if (err)
                 res.send(err);
-            }
-            res.json(todos);
+
+            Todo.find({
+                belongsTo: decoded._doc._id
+            }, function (err, todos) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(todos);
+            });
         });
-    });
+    } else {
+        res.status(404).send({message: 'To create new ToDo, you have to fill this field'});
+    }
 
 });
 
