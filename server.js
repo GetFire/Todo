@@ -55,7 +55,6 @@ app.post('/api/user', function (req, res) {
                         var token = jwt.sign(user, app.get('superSecret'), {
                             expiresIn: 18000 // expires in 24 hours
                         });
-
                         res.json({
                             _id: user._id,
                             username: user.name,
@@ -113,7 +112,15 @@ apiRouter.use(function (req, res, next) {
                 return res.json({success: false, message: 'Failed to authenticate token.'});
             } else {
                 req.decoded = decoded;
-                next();
+                User.findOne({_id:req.decoded._doc._id}, function (err, user) {
+                    if (err) {
+                        res.send(err);
+                    }
+                    if (user) {
+                        next();
+                    }
+                });
+
             }
         });
     } else {
@@ -143,23 +150,15 @@ apiRouter.get('/todo', function (req, res) {
 
 apiRouter.post('/todo', function (req, res) {
     if (req.body.text) {
-        var token = req.body.token || req.query.token || req.headers['x-access-token'];
-        var decoded;
-        try {
-            decoded = jwt.verify(token, app.get('superSecret'));
-        } catch (ex) {
-            return res.status(401).send({message: 'Unauthorized'});
-        }
-
         Todo.create({
             text: req.body.text,
-            belongsTo: decoded._doc._id
+            belongsTo: req.decoded._doc._id
         }, function (err, todo) {
             if (err)
                 res.send(err);
 
             Todo.find({
-                belongsTo: decoded._doc._id
+                belongsTo: req.decoded._doc._id
             }, function (err, todos) {
                 if (err) {
                     res.send(err);
@@ -174,20 +173,14 @@ apiRouter.post('/todo', function (req, res) {
 });
 
 apiRouter.delete('/todo/:todo_id', function (req, res) {
-    var token = req.body.token || req.query.token || req.headers['x-access-token'];
-    var decoded;
-    try {
-        decoded = jwt.verify(token, app.get('superSecret'));
-    } catch (ex) {
-        return res.status(401).send({message: 'Unauthorized'});
-    }
+
     Todo.findOne({
         _id: req.params.todo_id
     }, function (err, todo) {
         if (err) {
             res.send(err);
         }
-        if (todo.belongsTo == decoded._doc._id) {
+        if (todo.belongsTo == req.decoded._doc._id) {
             Todo.remove({
                 _id: req.params.todo_id
             }, function (err, todo) {
@@ -195,7 +188,7 @@ apiRouter.delete('/todo/:todo_id', function (req, res) {
                     res.send(err);
 
                 Todo.find({
-                    belongsTo: decoded._doc._id
+                    belongsTo: req.decoded._doc._id
                 }, function (err, todos) {
                     if (err) {
                         res.send(err);
@@ -211,15 +204,8 @@ apiRouter.delete('/todo/:todo_id', function (req, res) {
 });
 
 apiRouter.get('/todo/my', function (req, res) {
-    var token = req.body.token || req.query.token || req.headers['x-access-token'];
-    var decoded;
-    try {
-        decoded = jwt.verify(token, app.get('superSecret'));
-    } catch (ex) {
-        return res.status(401).send({message: 'Unauthorized'});
-    }
     Todo.find({
-        belongsTo: decoded._doc._id
+        belongsTo: req.decoded._doc._id
     }, function (err, todo) {
         if (err) {
             res.send(err);

@@ -48,7 +48,7 @@ function mainController($scope, $http) {
         $scope.todo.token = $scope.currentUser.token;
         $http.post('/api/todo', $scope.todo)
             .success(function (data) {
-                $scope.error=false;
+                $scope.error = false;
                 $scope.todo = {}; // clear the form so our user is ready to enter another
                 $scope.todos = data;
             })
@@ -74,6 +74,7 @@ function mainController($scope, $http) {
         // when landing on the page, get all todos and show them
         $http.get('/api/todo', {headers: {'x-access-token': $scope.currentUser.token}})
             .success(function (data) {
+                $scope.error = false;
                 $scope.todos = data;
             })
             .error(function (data) {
@@ -86,6 +87,7 @@ function mainController($scope, $http) {
             headers: {'x-access-token': $scope.currentUser.token}
         })
             .success(function (data) {
+                $scope.error = false;
                 $scope.todos = data;
             })
             .error(function (data) {
